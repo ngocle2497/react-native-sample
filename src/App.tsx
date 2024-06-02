@@ -1,10 +1,15 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {Button, SafeAreaView, StyleSheet} from 'react-native';
-import {PriceBoardListView, Quote} from 'react-native-sample';
+import {Button, SafeAreaView, StyleSheet, View} from 'react-native';
+import {
+  EndlessPriceBoardListView,
+  EndlessQuote,
+  PriceBoardListView,
+  Quote,
+} from 'react-native-sample';
 import priceBoard from '../data/price-board.json';
 import {setupTheming} from './theming';
 import {faker} from '@faker-js/faker';
-const priceBoardData = priceBoard.slice(0, 10);
+const priceBoardData = priceBoard.slice(0, 100);
 const status = ['UP', 'DOWN', 'UNKNOWN'] as const;
 
 // we need call this function to initialize the fakerjs
@@ -36,6 +41,7 @@ let timeInterval: any = null;
 const App = () => {
   // state
   const priceBoardListRef = useRef<PriceBoardListView>(null);
+  const endlessPriceBoardListRef = useRef<EndlessPriceBoardListView>(null);
 
   // func
   const handleUpdate = () => {
@@ -68,6 +74,15 @@ const App = () => {
         percent: `${percent}%`,
         percentStatus,
       });
+      endlessPriceBoardListRef.current?.updateItem({
+        ...nextItem,
+        tradePrice,
+        tradePriceStatus,
+        point,
+        pointStatus,
+        percent: `${percent}%`,
+        percentStatus,
+      });
     }, 1);
   };
 
@@ -75,6 +90,9 @@ const App = () => {
   useEffect(() => {
     setTimeout(() => {
       priceBoardListRef.current?.setData(priceBoardData as Array<Quote>);
+      endlessPriceBoardListRef.current?.setData(
+        priceBoardData as Array<EndlessQuote>,
+      );
     }, 100);
   }, []);
 
@@ -82,6 +100,14 @@ const App = () => {
   return (
     <SafeAreaView style={styles.root}>
       <Button title="Start Update" onPress={handleUpdate} />
+      <View style={styles.endlessList}>
+        <EndlessPriceBoardListView
+          ref={endlessPriceBoardListRef}
+          onPressHandle={e => {
+            console.log({e});
+          }}
+        />
+      </View>
       <PriceBoardListView
         ref={priceBoardListRef}
         onPressHandle={e => {
@@ -98,5 +124,9 @@ const styles = StyleSheet.create({
   root: {
     flex: 1,
     backgroundColor: '#1D2939',
+  },
+  endlessList: {
+    height: 100,
+    width: '100%',
   },
 });

@@ -11,7 +11,9 @@ import com.facebook.react.uimanager.UIManagerHelper
 import com.facebook.react.uimanager.common.UIManagerType
 import com.sample.common.ListViewType
 import com.sample.common.Theming
+import com.sample.entity.EndlessQuote
 import com.sample.entity.Quote
+import com.sample.reactviews.EndlessPriceBoardListView
 import com.sample.reactviews.PriceBoardListView
 import com.sample.utils.Logg
 import kotlinx.coroutines.CancellationException
@@ -45,7 +47,10 @@ class SampleModule(context: ReactApplicationContext) : ReactContextBaseJavaModul
                     val view = findView<PriceBoardListView>(viewId.toInt())
                     view?.setData(Quote.fromArray(data))
                 }
-
+                ListViewType.ENDLESS -> {
+                    val view = findView<EndlessPriceBoardListView>(viewId.toInt())
+                    view?.setData(EndlessQuote.fromArray(data))
+                }
                 else -> {}
             }
         }
@@ -65,7 +70,10 @@ class SampleModule(context: ReactApplicationContext) : ReactContextBaseJavaModul
                     val view = findView<PriceBoardListView>(viewId.toInt())
                     view?.updateItem(Quote.fromMap(data))
                 }
-
+                ListViewType.ENDLESS -> {
+                    val view = findView<EndlessPriceBoardListView>(viewId.toInt())
+                    view?.updateItem(EndlessQuote.fromMap(data))
+                }
                 else -> {}
             }
         }

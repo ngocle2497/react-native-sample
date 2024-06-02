@@ -128,7 +128,6 @@ class ItemPriceBoardViewHolder(itemView: View, val recyclerView: RecyclerView?) 
         } else {
             cvContainerPrice.setCardBackgroundColor(Color.TRANSPARENT)
         }
-
     }
 
     // ===== Private fun ===== \\
@@ -164,5 +163,4 @@ class ItemPriceBoardViewHolder(itemView: View, val recyclerView: RecyclerView?) 
             tvPercent.setTextSize(TypedValue.COMPLEX_UNIT_PX, it.sizeAdjustsFit)
         }
     }
-
 }

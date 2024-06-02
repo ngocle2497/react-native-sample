@@ -25,7 +25,7 @@ open class BaseListView<T>(context: Context) : FrameLayout(context) where T : Ba
         }
     }
 
-    fun setData(items: List<T>) {
+    open fun setData(items: List<T>) {
         val header = listItems.firstOrNull { it.isHeader }
         val footer = listItems.firstOrNull { it.isFooter }
         listItems.clear()
