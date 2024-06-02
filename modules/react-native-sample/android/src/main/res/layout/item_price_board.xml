@@ -10,9 +10,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginStart="16dp"
+        android:layout_marginTop="4dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="4dp"
-        android:layout_marginTop="4dp"
         android:theme="@style/Platform.MaterialComponents.Light"
         app:cardBackgroundColor="@android:color/transparent"
         app:cardCornerRadius="8dp"
@@ -66,16 +66,18 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="end"
+                    android:layout_gravity="center"
                     android:orientation="horizontal">
 
                     <androidx.cardview.widget.CardView
                         android:id="@+id/cvContainerPrice"
-                        app:cardElevation="0dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
                         android:elevation="0dp"
                         app:cardBackgroundColor="@android:color/transparent"
                         app:cardCornerRadius="4dp"
+                        app:cardElevation="0dp"
                         app:contentPaddingBottom="2dp"
                         app:contentPaddingLeft="4dp"
                         app:contentPaddingRight="4dp"
@@ -86,6 +88,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:ellipsize="end"
+                            android:textAlignment="center"
                             android:maxLines="1"
                             android:text="Price" />
                     </androidx.cardview.widget.CardView>
@@ -113,10 +116,14 @@
                         android:maxLines="1"
                         android:text="Point" />
 
+                    <View
+                        android:layout_width="2dp"
+                        android:layout_height="match_parent" />
+
                     <LinearLayout
-                        android:layout_marginHorizontal="2dp"
-                        android:layout_width="24dp"
-                        android:layout_height="24dp">
+                        android:id="@+id/lnIconWrapper"
+                        android:layout_width="18dp"
+                        android:layout_height="18dp">
 
                         <ImageView
                             android:id="@+id/imgUpDownIcon"
@@ -124,7 +131,9 @@
                             android:layout_height="match_parent" />
                     </LinearLayout>
 
-
+                    <View
+                        android:layout_width="2dp"
+                        android:layout_height="match_parent" />
                     <TextView
                         android:id="@+id/tvPercent"
                         android:layout_width="wrap_content"

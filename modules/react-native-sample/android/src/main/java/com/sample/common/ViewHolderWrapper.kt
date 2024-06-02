@@ -1,6 +1,5 @@
 package com.sample.common
 
-import android.content.Context
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 

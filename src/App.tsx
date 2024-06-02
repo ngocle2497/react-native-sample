@@ -7,6 +7,10 @@ import {faker} from '@faker-js/faker';
 const priceBoardData = priceBoard.slice(0, 10);
 const status = ['UP', 'DOWN', 'UNKNOWN'] as const;
 
+// we need call this function to initialize the fakerjs
+// i don't know why, but if we call faker functions when click button, the first times call will be slow(about 1s delay)
+faker.finance.amount({min: 555, max: 5555, dec: 2}).toString();
+
 const AppWrapper = () => {
   // state
   const [loaded, setLoaded] = useState(false);
@@ -27,6 +31,7 @@ const AppWrapper = () => {
   }
   return null;
 };
+
 let timeInterval: any = null;
 const App = () => {
   // state
@@ -37,7 +42,6 @@ const App = () => {
     clearInterval(timeInterval);
     timeInterval = setInterval(() => {
       const nextItem = faker.helpers.arrayElement(priceBoardData);
-      console.log(nextItem.key);
 
       const tradePrice = faker.finance
         .amount({min: 555, max: 5555, dec: 2})
@@ -61,7 +65,7 @@ const App = () => {
         tradePriceStatus,
         point,
         pointStatus,
-        percent,
+        percent: `${percent}%`,
         percentStatus,
       });
     }, 1);
@@ -69,7 +73,9 @@ const App = () => {
 
   // effect
   useEffect(() => {
-    priceBoardListRef.current?.setData(priceBoardData as Array<Quote>);
+    setTimeout(() => {
+      priceBoardListRef.current?.setData(priceBoardData as Array<Quote>);
+    }, 100);
   }, []);
 
   // render

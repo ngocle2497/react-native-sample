@@ -1,3 +1,4 @@
+import {Image} from 'react-native';
 import {setTheme} from 'react-native-sample';
 
 const colors = {
@@ -68,6 +69,11 @@ const textPresets = {
   },
 };
 
+const images = {
+  up: Image.resolveAssetSource(require('../assets/up_icon.png')).uri,
+  down: Image.resolveAssetSource(require('../assets/down_icon.png')).uri,
+};
+
 export const setupTheming = async () => {
-  return setTheme({colors, textPresets});
+  return setTheme({colors, textPresets, images});
 };

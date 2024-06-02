@@ -41,7 +41,7 @@ class PriceBoardAdapter(private val list: ArrayList<Quote>) : BaseAdapter<Quote>
                 val view =
                     LayoutInflater.from(parent.context)
                         .inflate(R.layout.item_price_board, parent, false)
-                return ItemPriceBoardViewHolder(view)
+                return ItemPriceBoardViewHolder(view, recyclerView )
             }
         }
     }

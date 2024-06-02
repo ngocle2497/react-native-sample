@@ -2,6 +2,7 @@ package com.sample.common
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.Typeface
 import com.facebook.react.bridge.ReadableMap
@@ -9,6 +10,7 @@ import com.facebook.react.bridge.ReadableType
 import com.facebook.react.common.assets.ReactFontManager
 import com.facebook.react.common.assets.ReactFontManager.TypefaceStyle
 import com.facebook.react.uimanager.PixelUtil
+import com.sample.utils.ImageLoader
 import com.sample.utils.Logg
 import kotlin.math.ceil
 
@@ -29,6 +31,16 @@ enum class ColorName {
     val color: Int
         get() {
             return Theming.instance?.getColor(this) ?: Color.TRANSPARENT
+        }
+}
+
+enum class IconName {
+    up,
+    down;
+
+    val icon: Bitmap?
+        get() {
+            return Theming.instance?.getIcon(this)
         }
 }
 
@@ -82,14 +94,23 @@ class Theming(private val context: Context) {
 
 
     private var colorMap: HashMap<String, Int> = hashMapOf()
+    private var iconMap: HashMap<String, Bitmap?> = hashMapOf()
     private var textPresetMap: HashMap<String, TextPreset> = hashMapOf()
+
+    // ===== Public fun ===== \\
 
     fun getTextPreset(name: TextStyles): TextPreset? {
         return textPresetMap[name.name]
     }
 
+    fun getIcon(name: IconName): Bitmap? {
+        return iconMap[name.name]
+    }
+
     fun updateTheme(theme: ReadableMap) {
-        val a = theme.getMap("colors")
+        theme.getMap("images")?.let {
+            loadImage(it)
+        }
         theme.getMap("colors")?.let {
             val iterator = it.keySetIterator()
             while (iterator.hasNextKey()) {
@@ -102,7 +123,10 @@ class Theming(private val context: Context) {
                     }
 
                     else -> {
-                        Logg.d("Theming->updateTheme", "Only support number value, use processColor to get it")
+                        Logg.d(
+                            "Theming->updateTheme",
+                            "Only support number value, use processColor to get it"
+                        )
                     }
                 }
             }
@@ -117,7 +141,7 @@ class Theming(private val context: Context) {
                     ReadableType.Map -> {
                         val fontFamily = value.asMap().getString("fontFamily") ?: ""
                         val fontSize = value.asMap().getDouble("fontSize").toFloat()
-                        textPresetMap[key.toString()] = TextPreset(context, fontFamily, fontSize )
+                        textPresetMap[key.toString()] = TextPreset(context, fontFamily, fontSize)
                     }
 
                     else -> {
@@ -135,6 +159,13 @@ class Theming(private val context: Context) {
         return Color.TRANSPARENT
     }
 
+    // ===== Private fun ===== \\
+    private fun loadImage(image: ReadableMap) {
+        val map = ImageLoader.loadImages(image, context)
+        map.forEach { (key, bitmap) ->
+            iconMap[key] = bitmap
+        }
+    }
 
     companion object {
 

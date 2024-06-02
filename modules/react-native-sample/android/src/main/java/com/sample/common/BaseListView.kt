@@ -3,7 +3,6 @@ package com.sample.common
 import android.annotation.SuppressLint
 import android.content.Context
 import android.widget.FrameLayout
-import androidx.recyclerview.widget.RecyclerView
 import com.facebook.react.bridge.UiThreadUtil
 import com.sample.entity.BaseEntity
 

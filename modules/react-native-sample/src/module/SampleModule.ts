@@ -25,5 +25,9 @@ export const setTheme = (theme: ThemingType) => {
     prev[curr] = processColor(theme.colors[curr]);
     return prev;
   }, {} as Record<string, ProcessedColorValue | null | undefined>);
-  SampleModule.setTheme({colors, textPresets: theme.textPresets});
+  SampleModule.setTheme({
+    colors,
+    textPresets: theme.textPresets,
+    images: theme.images,
+  });
 };

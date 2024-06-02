@@ -11,7 +11,7 @@ import com.facebook.react.uimanager.events.Event
 
 object Emitter {
 
-    const val ITEM_PRESSED_HANDLED = "onItemPressHandle"
+    const val ITEM_PRESSED_HANDLED = "onPressHandle"
 
     class BaseEvent(
         surfaceId: Int,

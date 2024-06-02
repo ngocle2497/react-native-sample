@@ -43,7 +43,7 @@ const createPriceBoardData = () => {
       tradePriceStatus,
       point,
       pointStatus,
-      percent,
+      percent: `${percent}%`,
       percentStatus,
     };
   });

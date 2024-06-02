@@ -7,7 +7,7 @@ import com.sample.entity.ItemViewType
 
 abstract class BaseAdapter<T>(private val listView: ArrayList<T>) :
     RecyclerView.Adapter<ViewHolder>() where T : BaseEntity {
-    private var recyclerView: RecyclerView? = null
+     var recyclerView: RecyclerView? = null
 
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
         super.onAttachedToRecyclerView(recyclerView)
