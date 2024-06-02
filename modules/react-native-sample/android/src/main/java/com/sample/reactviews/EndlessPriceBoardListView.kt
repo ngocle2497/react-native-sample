@@ -3,19 +3,16 @@ package com.sample.reactviews
 import android.content.Context
 import android.view.MotionEvent
 import android.view.View
-import android.widget.AbsListView
-import android.widget.AbsListView.OnScrollListener
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.facebook.react.bridge.Arguments
 import com.facebook.react.bridge.ReactContext
 import com.sample.adapter.EndlessPriceBoardAdapter
-import com.sample.adapter.PriceBoardAdapter
 import com.sample.common.BaseListView
 import com.sample.common.ViewHolderWrapper
 import com.sample.entity.EndlessQuote
-import com.sample.entity.Quote
 import com.sample.utils.Emitter
+import com.sample.utils.Logg
 import java.util.Timer
 import java.util.TimerTask
 
@@ -25,7 +22,7 @@ class EndlessPriceBoardListView(context: Context) : BaseListView<EndlessQuote>(c
 
     private val timer: Timer = Timer()
     private var shouldPausedScroll = false
-
+private var scrollState = RecyclerView.SCROLL_STATE_IDLE
     private val scrollListener = (object : RecyclerView.OnScrollListener() {
         override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
             super.onScrolled(recyclerView, dx, dy)
@@ -42,13 +39,19 @@ class EndlessPriceBoardListView(context: Context) : BaseListView<EndlessQuote>(c
 
         override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
             super.onScrollStateChanged(recyclerView, newState)
+            Logg.d("ScrollState", "$newState")
+            scrollState = newState
             shouldPausedScroll = newState != 0
         }
     })
 
     private val onTouchListener = (object : OnTouchListener {
         override fun onTouch(v: View?, event: MotionEvent?): Boolean {
-            shouldPausedScroll = true
+            if(event?.action === MotionEvent.ACTION_UP && scrollState ==  RecyclerView.SCROLL_STATE_IDLE){
+                shouldPausedScroll = false
+            } else {
+                shouldPausedScroll = true
+            }
             return false
         }
     })
