@@ -1,21 +1,54 @@
 package com.sample.common
 
-open class BaseListView<T>(context: Context) : RecyclerView(context) where T : BaseEntity {
-    private val adapter = BaseAdapter<T>()
-    var listItems: ArrayList<T> = arrayOf()
+import android.annotation.SuppressLint
+import android.content.Context
+import android.widget.FrameLayout
+import androidx.recyclerview.widget.RecyclerView
+import com.facebook.react.bridge.UiThreadUtil
+import com.sample.entity.BaseEntity
 
-    init {
-        layoutManager = LinearLayoutManager(context)
-        setAdapter(adapter)
+open class BaseListView<T>(context: Context) : FrameLayout(context) where T : BaseEntity {
+    var recyclerView = PatchedRecyclerView(context)
+    var listItems: ArrayList<T> = arrayListOf()
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun notifyDataChanged() {
+        recyclerView.post {
+            run {
+                recyclerView.adapter?.notifyDataSetChanged()
+            }
+        }
     }
 
-    fun notifiyDataChanged() {
-        runOnUiThread { adapter.notifyDataSetChanged() }
+    fun notifyItemChanged(index: Int) {
+        UiThreadUtil.runOnUiThread {
+            recyclerView.adapter?.notifyItemChanged(index)
+        }
     }
 
     fun setData(items: List<T>) {
+        val header = listItems.firstOrNull { it.isHeader }
+        val footer = listItems.firstOrNull { it.isFooter }
         listItems.clear()
+        header?.let {
+            listItems.add(0, header)
+        }
+        footer?.let {
+            listItems.add(listItems.lastIndex + 1, footer)
+        }
         listItems.addAll(items)
-        notifiyDataChanged()
+        notifyDataChanged()
     }
+
+    fun updateItem(item: T) {
+        val index = listItems.indexOfFirst { it.key == item.key }
+        if (index >= 0) {
+            val oldItem = listItems[index]
+            listItems[index] = item
+            updateItem(index, item, oldItem)
+        }
+    }
+
+    open fun updateItem(index: Int, item: T, oldItem: T) {}
+
 }

@@ -10,6 +10,7 @@
     "test": "jest"
   },
   "dependencies": {
+    "@faker-js/faker": "^8.4.1",
     "react": "18.2.0",
     "react-native": "0.73.8",
     "react-native-sample": "link:./modules/react-native-sample"

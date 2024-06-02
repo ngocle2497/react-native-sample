@@ -2,6 +2,6 @@ package com.sample.entity
 
 interface BaseEntity {
     val key: String
-    val isHeader: String
-    val isFooter: String
+    val isHeader: Boolean
+    val isFooter: Boolean
 }
