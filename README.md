@@ -8,7 +8,6 @@ JS -> Native Module -> get Native View by tag -> Call method it self
 
 ### Android
 
-<video width="320" height="640" controls>
-  <source src="./preview/android.mp4" type="video/mp4">
-  Android Preview
-</video>
+
+https://github.com/ngocle2497/react-native-sample/assets/43195241/d64ce79f-2ed1-4c68-a7ee-4069c4f55464
+
