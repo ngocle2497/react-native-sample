@@ -1,6 +1,7 @@
 import {Platform, UIManager, requireNativeComponent} from 'react-native';
 import {NativePriceBoardListViewProps} from '../types/PriceBoardListViewProps';
 import {NativeEndlessPriceBoardListViewProps} from '../types/EndlessPriceBoardListViewProps';
+import {PropsWithChildren} from 'react';
 
 const LINKING_ERROR =
   "The package 'react-native-sample' doesn't seem to be linked. Make sure: \n\n" +
@@ -23,7 +24,7 @@ const HeaderListViewComponentName = 'HeaderWrapperView';
 
 export const NativeHeaderWrapperView =
   UIManager.getViewManagerConfig(HeaderListViewComponentName) != null
-    ? requireNativeComponent<{}>(HeaderListViewComponentName)
+    ? requireNativeComponent<PropsWithChildren>(HeaderListViewComponentName)
     : () => {
         throw new Error(LINKING_ERROR);
       };
@@ -32,7 +33,7 @@ const FooterListViewComponentName = 'FooterWrapperView';
 
 export const NativeFooterWrapperView =
   UIManager.getViewManagerConfig(FooterListViewComponentName) != null
-    ? requireNativeComponent<{}>(FooterListViewComponentName)
+    ? requireNativeComponent<PropsWithChildren>(FooterListViewComponentName)
     : () => {
         throw new Error(LINKING_ERROR);
       };

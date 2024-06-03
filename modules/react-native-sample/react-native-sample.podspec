@@ -15,6 +15,7 @@ Pod::Spec.new do |s|
   s.source       = { :git => ".git", :tag => "#{s.version}" }
 
   s.source_files = "ios/**/*.{h,m,mm,swift,xib}"
+  s.resources = "ios/**/*.{xib}"
   s.public_header_files = "ios/Sample-Bridging-Header.h"
 
   # Use install_modules_dependencies helper to install the dependencies if React Native version >=0.71.0.

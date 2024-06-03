@@ -1,5 +1,6 @@
+import {faker} from '@faker-js/faker';
 import React, {useEffect, useRef, useState} from 'react';
-import {Button, SafeAreaView, StyleSheet, View} from 'react-native';
+import {Button, SafeAreaView, StyleSheet, Text, View} from 'react-native';
 import {
   EndlessPriceBoardListView,
   EndlessQuote,
@@ -8,14 +9,13 @@ import {
 } from 'react-native-sample';
 import priceBoard from '../data/price-board.json';
 import {setupTheming} from './theming';
-import {faker} from '@faker-js/faker';
 const priceBoardData = priceBoard.slice(0, 100);
 const status = ['UP', 'DOWN', 'UNKNOWN'] as const;
 
 // we need call this function to initialize the fakerjs
 // i don't know why, but if we call faker functions when click button, the first times call will be slow(about 1s delay)
 faker.finance.amount({min: 555, max: 5555, dec: 2}).toString();
-
+let timeInterval = 0 as any;
 const AppWrapper = () => {
   // state
   const [loaded, setLoaded] = useState(false);
@@ -37,7 +37,6 @@ const AppWrapper = () => {
   return null;
 };
 
-let timeInterval: any = null;
 const App = () => {
   // state
   const priceBoardListRef = useRef<PriceBoardListView>(null);
@@ -47,7 +46,8 @@ const App = () => {
   const handleUpdate = () => {
     clearInterval(timeInterval);
     timeInterval = setInterval(() => {
-      const nextItem = faker.helpers.arrayElement(priceBoardData);
+      const nextItem =
+        priceBoardData[Math.floor(Math.random() * (priceBoardData.length - 1))];
 
       const tradePrice = faker.finance
         .amount({min: 555, max: 5555, dec: 2})
@@ -109,6 +109,16 @@ const App = () => {
         />
       </View>
       <PriceBoardListView
+        listHeaderComponent={
+          <View style={{backgroundColor: 'red'}}>
+            <Text>This is header</Text>
+          </View>
+        }
+        listFooterComponent={
+          <View style={{backgroundColor: 'green'}}>
+            <Text>This is footer</Text>
+          </View>
+        }
         ref={priceBoardListRef}
         onPressHandle={e => {
           console.log({e});
@@ -126,7 +136,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#1D2939',
   },
   endlessList: {
-    height: 100,
+    height: 110,
     width: '100%',
+    justifyContent: 'center',
+    paddingTop: 5,
   },
 });

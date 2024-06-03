@@ -5,6 +5,8 @@ import android.content.Context
 import android.widget.FrameLayout
 import com.facebook.react.bridge.UiThreadUtil
 import com.sample.entity.BaseEntity
+import com.sample.reactviews.FooterWrapperView
+import com.sample.reactviews.HeaderWrapperView
 
 open class BaseListView<T>(context: Context) : FrameLayout(context) where T : BaseEntity {
     var recyclerView = PatchedRecyclerView(context)
@@ -29,13 +31,13 @@ open class BaseListView<T>(context: Context) : FrameLayout(context) where T : Ba
         val header = listItems.firstOrNull { it.isHeader }
         val footer = listItems.firstOrNull { it.isFooter }
         listItems.clear()
+        listItems.addAll(items)
         header?.let {
             listItems.add(0, header)
         }
         footer?.let {
             listItems.add(listItems.lastIndex + 1, footer)
         }
-        listItems.addAll(items)
         notifyDataChanged()
     }
 
@@ -50,4 +52,19 @@ open class BaseListView<T>(context: Context) : FrameLayout(context) where T : Ba
 
     open fun updateItem(index: Int, item: T, oldItem: T) {}
 
+    open fun updateLayoutHeader(width: Int, height: Int) {
+
+    }
+
+    open fun updateLayoutFooter(width: Int, height: Int) {
+
+    }
+
+    open fun addHeader(header: HeaderWrapperView) {
+
+    }
+
+    open fun addFooter(footer: FooterWrapperView) {
+
+    }
 }

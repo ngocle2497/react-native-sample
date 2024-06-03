@@ -20,6 +20,14 @@ export const updateItemList = (
   SampleModule.updateItemList(viewTag, type, data);
 };
 
+export const updateHeaderList = (viewId: number, headerViewId: number) => {
+  return SampleModule.updateHeaderList(viewId, headerViewId);
+};
+
+export const updateFooterList = (viewId: number, footerViewId: number) => {
+  return SampleModule.updateFooterList(viewId, footerViewId);
+};
+
 export const setTheme = (theme: ThemingType) => {
   const colors = Object.keys(theme.colors).reduce((prev, curr) => {
     prev[curr] = processColor(theme.colors[curr]);

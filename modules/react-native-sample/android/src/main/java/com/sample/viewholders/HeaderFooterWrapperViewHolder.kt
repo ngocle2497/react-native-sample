@@ -18,13 +18,16 @@ class HeaderFooterWrapperViewHolder(itemView: View, childView: View?, wrapperVie
     }
 
     // ===== Public fun ===== \\
-    fun updateLayout(h: Int, view: View?) {
+    fun updateLayout(h: Int, view: View?): Boolean {
         addViewIfNeeded(view)
-
+        if (lnWrapper.layoutParams.height == h) {
+            return false
+        }
         lnWrapper.updateLayoutParams {
             height = h
             width = LayoutParams.MATCH_PARENT
         }
+        return true
     }
 
     // ===== Private fun ===== \\
@@ -32,6 +35,12 @@ class HeaderFooterWrapperViewHolder(itemView: View, childView: View?, wrapperVie
         if (lnWrapper.size > 0 || view == null) {
             return
         }
+
+        lnWrapper.layoutParams = LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.MATCH_PARENT,
+            view?.height ?: 0
+        )
+
         try {
             if (view.parent is ReactViewGroup) {
                 (view.parent as ReactViewGroup).removeView(view)

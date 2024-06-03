@@ -14,10 +14,13 @@ import com.sample.common.Theming
 import com.sample.entity.EndlessQuote
 import com.sample.entity.Quote
 import com.sample.reactviews.EndlessPriceBoardListView
+import com.sample.reactviews.FooterWrapperView
+import com.sample.reactviews.HeaderWrapperView
 import com.sample.reactviews.PriceBoardListView
 import com.sample.utils.Logg
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.asCoroutineDispatcher
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.suspendCancellableCoroutine
@@ -76,6 +79,38 @@ class SampleModule(context: ReactApplicationContext) : ReactContextBaseJavaModul
                 }
                 else -> {}
             }
+        }
+    }
+
+    @ReactMethod
+    fun updateHeaderList(viewId: Double, headerId: Double) {
+        backgroundCoroutineScope.launch(Dispatchers.Main) {
+            val view = findView<PriceBoardListView>(
+                viewId.toInt(),
+            )
+            val headerView = findView<HeaderWrapperView>(
+                headerId.toInt(),
+            )
+            view?.updateLayoutHeader(
+                headerView?.width ?: 0,
+                headerView?.height ?: 0
+            )
+        }
+    }
+
+    @ReactMethod
+    fun updateFooterList(viewId: Double, footerId: Double) {
+        backgroundCoroutineScope.launch(Dispatchers.Main) {
+            val view = findView<PriceBoardListView>(
+                viewId.toInt(),
+            )
+            val footerView = findView<FooterWrapperView>(
+                footerId.toInt(),
+            )
+            view?.updateLayoutFooter(
+                footerView?.width ?: 0,
+                footerView?.height ?: 0
+            )
         }
     }
 

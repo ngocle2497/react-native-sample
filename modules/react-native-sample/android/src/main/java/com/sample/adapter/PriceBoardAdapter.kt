@@ -21,7 +21,7 @@ class PriceBoardAdapter(private val list: ArrayList<Quote>) : BaseAdapter<Quote>
                         .inflate(R.layout.footer_wrapper, parent, false)
                 return HeaderFooterWrapperViewHolder(
                     view,
-                    PriceBoardListView.footer,
+                    PriceBoardListView.footerView,
                     R.id.lnFooterWrapper
                 )
             }
@@ -32,7 +32,7 @@ class PriceBoardAdapter(private val list: ArrayList<Quote>) : BaseAdapter<Quote>
                         .inflate(R.layout.header_wrapper, parent, false)
                 return HeaderFooterWrapperViewHolder(
                     view,
-                    PriceBoardListView.header,
+                    PriceBoardListView.headerView,
                     R.id.lnHeaderWrapper
                 )
             }
